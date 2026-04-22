@@ -1,37 +1,35 @@
 import React from 'react';
-import { IonIcon, IonRouterLink } from '@ionic/react';
+import { IonIcon } from '@ionic/react';
 import { home, sparkles } from 'ionicons/icons';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 interface BottomNavbarProps {
   activeTab?: string;
 }
 
-const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeTab }) => {
-  const location = useLocation();
-  
-  // Determine active tab based on current location
-  const currentTab = activeTab || (location.pathname === '/infference' ? 'prediksi' : 'home');
+const BottomNavbar: React.FC<BottomNavbarProps> = ({ activeTab = 'home' }) => {
+  const history = useHistory();
+
+  const handleNavigation = (path: string) => {
+    history.push(path);
+  };
 
   return (
     <div className="bottom-navbar">
-      <IonRouterLink
-        routerLink="/"
-        routerDirection="forward"
-        className={`navbar-item ${currentTab === 'home' ? 'active' : ''}`}
+      <button
+        className={`navbar-item ${activeTab === 'home' ? 'active' : ''}`}
+        onClick={() => handleNavigation('/home')}
       >
         <IonIcon aria-hidden="true" icon={home} />
         <span className="navbar-label">Home</span>
-      </IonRouterLink>
-
-      <IonRouterLink
-        routerLink="/infference"
-        routerDirection="forward"
-        className={`navbar-item ${currentTab === 'prediksi' ? 'active' : ''}`}
+      </button>
+      <button
+        className={`navbar-item ${activeTab === 'prediksi' ? 'active' : ''}`}
+        onClick={() => handleNavigation('/infference')}
       >
         <IonIcon aria-hidden="true" icon={sparkles} />
         <span className="navbar-label">Prediksi</span>
-      </IonRouterLink>
+      </button>
     </div>
   );
 };

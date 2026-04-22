@@ -1,9 +1,8 @@
 import { IonReactRouter } from "@ionic/react-router";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router";
 import { IonRouterOutlet } from "@ionic/react";
 import Home from "../pages/home/Home";
 import Infference from "../pages/infference/Infference";
-import BottomNavbar from "../components/BottomNavbar";
 
 
 const Router:React.FC = ()=>{
@@ -11,18 +10,15 @@ const Router:React.FC = ()=>{
 
         <IonReactRouter>
             <IonRouterOutlet>
-                {/* Infference Page - must come before default */}
+                {/* Home (BASE ROOT) */}
+                <Route path="/home" component={Home} exact />
+                
+                {/* Infference Page  */}
                 <Route path="/infference" component={Infference} exact />
                 
-                {/* Home (BASE ROOT) */}
-                <Route path="/" component={Home} exact />
-                
-               
-               
+                {/* Redirect to home */}
+                <Redirect exact from="/" to="/home" />
             </IonRouterOutlet>
-
-            <BottomNavbar/>
-            
         </IonReactRouter>
 
     )
