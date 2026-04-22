@@ -279,7 +279,7 @@
   margin: 0;
   font-size: 20px;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
 }
 
 .inference-result-confidence {
@@ -329,6 +329,14 @@
   color: #333;
   line-height: 1.6;
   margin: 0;
+}
+
+.findings-text {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 .inference-result-disclaimer {
@@ -424,7 +432,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 100px;
   background-color: white;
   border-top: 1px solid #e0e0e0;
   display: flex;
@@ -438,6 +446,7 @@
 
 .navbar-item {
   flex: 1;
+  bottom: 20px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -511,3 +520,4 @@
   --padding-start: 0;
   --padding-end: 0;
 }
+

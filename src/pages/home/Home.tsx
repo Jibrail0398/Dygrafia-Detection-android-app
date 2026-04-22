@@ -1,7 +1,8 @@
 import { IonContent, IonPage } from '@ionic/react';
 import { pencil, grid, text, layers, volumeMute } from 'ionicons/icons';
-import BottomNavbar from '../../components/BottomNavbar';
+// BottomNavbar is rendered globally in the router
 import DysgrafiaTypes from '../../components/DysgrafiaTypes';
+import BottomNavbar from '../../components/BottomNavbar';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -59,7 +60,7 @@ const Home: React.FC = () => {
             ))}
           </div>
         </div>
-        <BottomNavbar activeTab="home" />
+        
       </IonContent>
     </IonPage>
   );

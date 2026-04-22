@@ -6,7 +6,7 @@
 //     disclaimer?: string;
 //   } | null>(null);
 
-import Infference from "../pages/infference/Infference";
+
 
 interface inferenceResult{
     label:string,

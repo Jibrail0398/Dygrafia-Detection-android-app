@@ -3,9 +3,9 @@ import { IonIcon } from '@ionic/react';
 import { warning, arrowUndo, close } from 'ionicons/icons';
 
 interface InfferenceResultProps {
-  label: 'Potential Dysgraphia' | 'Low Potential Dysgraphia';
+  label: string;
   confidence?: number;
-  findings: string[];
+  findings: string;
   disclaimer?: string;
   onDelete?: () => void;
   changeImages?: () => void;
@@ -20,6 +20,7 @@ const InfferenceResult: React.FC<InfferenceResultProps> = ({
   changeImages
 
 }) => {
+  console.log('InfferenceResult Props:', { label, confidence, findings, disclaimer });
   const isPotentialDysgraphia = label === 'Potential Dysgraphia';
   const labelColor = isPotentialDysgraphia ? '#d32f2f' : '#4caf50';
 
@@ -35,20 +36,16 @@ const InfferenceResult: React.FC<InfferenceResultProps> = ({
         {isPotentialDysgraphia && confidence !== undefined && (
           <div className="inference-result-confidence">
             <span className="confidence-label">Confidence</span>
-            <span className="confidence-value">{confidence}%</span>
+            <span className="confidence-value">{Math.round(confidence * 100)}%</span>
           </div>
         )}
 
         {/* Temuan Analisis Section */}
         <div className="inference-result-findings-section">
           <h3 className="findings-title">Temuan Analisis</h3>
-          <ul className="findings-list">
-            {findings.map((finding, index) => (
-              <li key={index} className="finding-item">
-                {finding}
-              </li>
-            ))}
-          </ul>
+          <p className="findings-text" style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6', color: '#333', marginTop: '10px' }}>
+            {findings}
+          </p>
         </div>
 
         {/* Disclaimer - Only show if Potential Dysgraphia */}
