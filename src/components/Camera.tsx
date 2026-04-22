@@ -79,7 +79,7 @@ const Camera: React.FC = () => {
 
           // Tentukan disclaimer berdasarkan label
           const disclaimer = res?.label === "Potential Dysgraphia"
-            ? "Hasil ini merupakan skrining awal"
+            ? "Hasil ini merupakan skrining awal dan bukan  diagnosis medis. Untuk memastikan kondisi anak secara menyeluruh, silahkan berkonsultasi dengan tenaga professional."
             : "";
 
           if (res?.label) {
