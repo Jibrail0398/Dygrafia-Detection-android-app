@@ -44,7 +44,7 @@ export function useInference(modelUrl: string) {
       setState({ result: null, inferring: true, error: null });
 
       try {
-        const tensor = await preprocess(imageSource);
+        const { tensor } = await preprocess(imageSource);
 
         // PERBAIKAN 1: Sesuaikan nama input node dengan model ONNX Anda ("image")
         const feeds: Record<string, ortTypes.Tensor> = {

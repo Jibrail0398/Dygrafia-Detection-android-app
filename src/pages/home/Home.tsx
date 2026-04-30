@@ -1,5 +1,5 @@
 import { IonContent, IonPage } from '@ionic/react';
-import { pencil, grid, text, layers, volumeMute } from 'ionicons/icons';
+import { pencil, grid, text, layers, volumeMute, bookmarks } from 'ionicons/icons';
 // BottomNavbar is rendered globally in the router
 import DysgrafiaTypes from '../../components/DysgrafiaTypes';
 import BottomNavbar from '../../components/BottomNavbar';
@@ -10,23 +10,37 @@ const Home: React.FC = () => {
     {
       icon: pencil,
       type: 'Disgrafia Motorik',
-      details: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore',
+      details: 'Disgrafia motorik, ditandai dengan kualitas tulisan yang buruk dan tidak terbaca baik saat menyalin maupun menulis spontan. Kondisi ini disebabkan oleh defisit kontrol motorik halus, penurunan ketangkasan, dan tonus otot rendah, meskipun kemampuan mengeja pada kelompok ini biasanya tetap terjaga. Jenis disgrafia ini ditandai dengan tulisan tangan yang tampak tipis.',
       typeColor: '#d32f2f',
       iconColor: '#d32f2f',
     },
     {
       icon: grid,
       type: 'Disgrafia Spasial',
-      details: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore',
+      details: 'Disgrafia spasial, berakar pada masalah kesadaran ruang, yang mengakibatkan tulisan melayang tidak pada garisnya dan pengaturan spasi antarhuruf yang buruk.',
       typeColor: '#00bcd4',
       iconColor: '#00bcd4',
     },
     {
       icon: text,
-      type: 'Disgrafia Disleksia',
-      details: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore',
+      type: 'Disgrafia Disleksik',
+      details: 'Disgrafia disleksik, ditandai oleh kemampuan menyalin teks yang baik karena motorik halus yang utuh, namun kesulitan menulis spontan akibat lemahnya penguasaan ejaan. Disgrafia jenis ini ditandai dengan seringnya ditemukan kesalahan ejaan.',
       typeColor: '#1976d2',
       iconColor: '#1976d2',
+    },
+    {
+      icon: volumeMute,
+      type: 'Disgrafia Fonologis',
+      details: 'Disgrafia fonologis, bermanifestasi sebagai kesulitan dalam mengingat dan menggabungkan bunyi fonem, sehingga penderita sulit menulis kata-kata asing atau kata dengan pola fonetik tidak teratur.',
+      typeColor: '#7c3aed',
+      iconColor: '#7c3aed',
+    },
+    {
+      icon: bookmarks,
+      type: 'Disgrafia Leksikal',
+      details: 'Disgrafia leksikal, ditandai dengan ketergantungan yang kuat pada konversi bunyi-ke-huruf saat menulis. Hal ini menyebabkan seringnya terjadi kesalahan ejaan pada kata-kata tidak beraturan, sebuah fenomena yang lebih umum ditemukan pada bahasa dengan aturan ejaan yang tidak konsisten seperti bahasa Inggris atau Prancis',
+      typeColor: '#10b981',
+      iconColor: '#10b981',
     },
   ];
 
