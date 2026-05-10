@@ -7,7 +7,12 @@ import UploadCard from "./UploadCard";
 import InfferenceResult from "./InfferenceResult";
 
 const Upload:React.FC = ()=>{
+  
+  const modelPath = "/models/mobilevit_fp16.onnx";
+  const { classify } = useInference(modelPath);
+
   const [file,setFile] = useState<File|null>(null);
+  const [fileName,setFileName] = useState<string|undefined>(undefined);
   const [imageUrl,setImageUrl] = useState<string|null>(null);
   const [message,setMessage] = useState<string|null>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -37,15 +42,35 @@ const Upload:React.FC = ()=>{
     }
   
     setFile(selectedFile);
+    setFileName(selectedFile.name);
     setIsimageUploaded(true);
     setImageUrl(URL.createObjectURL(selectedFile));
     setMessage("File berhasil diupload");
     try {
-      // TODO: Implement runInference function
-      const result =  RunInfference("Potential Dysgraphia");
-      setInferenceResult(result as typeof inferenceResult);
-      
-      console.log('File selected:', selectedFile.name);
+      // Karena useInference.ts sudah diperbaiki, res tidak akan undefined lagi
+      const res = await classify(objectUrl);
+
+      // Tentukan findings berdasarkan label
+      const findings = res?.label === "Potential Dysgraphia" 
+        ? "Ditemukan salah satu atau kombinasi dari indikasi berikut:\n1. Spasi antar kata tidak konsisten\n2. Ukuran huruf tidak konsisten\n3. Huruf-huruf yang melewati garis atau melayang diantara garis"
+        : "Tulisan tangan anak tampak normal, tidak ditemukan indikasi disgrafia";
+
+      // Tentukan disclaimer berdasarkan label
+      const disclaimer = res?.label === "Potential Dysgraphia"
+        ? " Hasil ini merupakan skrining awal dan bukan  diagnosis medis. Untuk memastikan kondisi anak secara menyeluruh, silahkan berkonsultasi dengan tenaga professional."
+        : "";
+
+      if (res?.label) {
+        const newInferenceResult = {
+          ...res,
+          findings: findings,
+          disclaimer: disclaimer,
+        };
+        setInferenceResult(newInferenceResult);
+        console.log(`Isi inferenceResult: `, newInferenceResult)
+      }
+      console.log("Hasil Prediksi:", res);
+
     } catch (error) {
       setMessage("Gagal memproses gambar");
     }
@@ -57,6 +82,7 @@ const Upload:React.FC = ()=>{
   
   const handleDeleteImage = () => {
     setFile(null);
+    setFileName(undefined);
     setImageUrl(null);
     setIsimageUploaded(false);
     setMessage(null);
@@ -80,7 +106,7 @@ const Upload:React.FC = ()=>{
           {imageUrl && (
             <ImageUploadedCard
               imageSrc={imageUrl}
-              fileName={file?.name}
+              fileName={fileName}
             />
           )}
           {inferenceResult && (
