@@ -7,7 +7,7 @@ import { openCamera } from '../services/camera';
 import { useInference } from '../hooks/useInference';
 
 const Camera: React.FC = () => {
-  const modelPath = "/models/mobilevit_s_fold1_fp16_standalone.onnx";
+  const modelPath = "/models/mobilevit_fp16.onnx";
   const { classify } = useInference(modelPath);
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);

@@ -8,10 +8,11 @@ import { useInference } from "../hooks/useInference";
 
 const Upload:React.FC = ()=>{
   
-  const modelPath = "/models/mobilevit_s_fold1_fp16_standalone.onnx";
+  const modelPath = "/models/mobilevit_fp16.onnx";
   const { classify } = useInference(modelPath);
 
   const [file,setFile] = useState<File|null>(null);
+  const [fileName,setFileName] = useState<string|undefined>(undefined);
   const [imageUrl,setImageUrl] = useState<string|null>(null);
   const [message,setMessage] = useState<string|null>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -42,6 +43,7 @@ const Upload:React.FC = ()=>{
     }
 
     setFile(selectedFile);
+    setFileName(selectedFile.name);
     setIsimageUploaded(true);
     const objectUrl = URL.createObjectURL(selectedFile);
     setImageUrl(objectUrl);
@@ -83,6 +85,7 @@ const Upload:React.FC = ()=>{
   
   const handleDeleteImage = () => {
     setFile(null);
+    setFileName(undefined);
     setImageUrl(null);
     setIsimageUploaded(false);
     setMessage(null);
@@ -106,7 +109,7 @@ const Upload:React.FC = ()=>{
           {imageUrl && (
             <ImageUploadedCard
               imageSrc={imageUrl}
-              fileName={file?.name}
+              fileName={fileName}
             />
           )}
           {inferenceResult && (
