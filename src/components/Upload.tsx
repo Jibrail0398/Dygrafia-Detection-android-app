@@ -1,26 +1,28 @@
 import { useState,useRef } from "react";
-import { RunInfference } from "../services/infference";
 import { image } from "ionicons/icons";
 
 import ImageUploadedCard from "./ImageUploadedCard";
 import UploadCard from "./UploadCard";
 import InfferenceResult from "./InfferenceResult";
+import { useInference } from "../hooks/useInference";
 
 const Upload:React.FC = ()=>{
   
-  const modelPath = "/models/mobilevit_fp16.onnx";
+  const modelPath = "/models/mobilevit_s_fold1_fp16_standalone.onnx";
   const { classify } = useInference(modelPath);
 
   const [file,setFile] = useState<File|null>(null);
-  const [fileName,setFileName] = useState<string|undefined>(undefined);
   const [imageUrl,setImageUrl] = useState<string|null>(null);
   const [message,setMessage] = useState<string|null>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isImageUploaded,setIsimageUploaded] = useState<Boolean>(false);
+
   const [inferenceResult, setInferenceResult] = useState<{
-    label: 'Potential Dysgraphia' | 'Low Potential Dysgraphia';
-    confidence?: number;
-    findings: string[];
+    label: string;
+    classIndex: number;
+    confidence: number;
+    probabilities: number[];
+    findings: string;
     disclaimer?: string;
   } | null>(null);
   
@@ -29,23 +31,22 @@ const Upload:React.FC = ()=>{
   async function handleChooseImage(event: React.ChangeEvent<HTMLInputElement>){
     const selectedFile = event.target.files?.[0];
     
-    // Validasi file ada
     if (!selectedFile) {
       setMessage("Tidak ada file yang dipilih");
       return;
     }
-  
-    // Validasi tipe file
+
     if (!allowedTypes.includes(selectedFile.type)) {
       setMessage("File harus berupa JPG, JPEG, atau PNG");
       return;
     }
-  
+
     setFile(selectedFile);
-    setFileName(selectedFile.name);
     setIsimageUploaded(true);
-    setImageUrl(URL.createObjectURL(selectedFile));
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setImageUrl(objectUrl);
     setMessage("File berhasil diupload");
+    
     try {
       // Karena useInference.ts sudah diperbaiki, res tidak akan undefined lagi
       const res = await classify(objectUrl);
@@ -82,7 +83,6 @@ const Upload:React.FC = ()=>{
   
   const handleDeleteImage = () => {
     setFile(null);
-    setFileName(undefined);
     setImageUrl(null);
     setIsimageUploaded(false);
     setMessage(null);
@@ -106,7 +106,7 @@ const Upload:React.FC = ()=>{
           {imageUrl && (
             <ImageUploadedCard
               imageSrc={imageUrl}
-              fileName={fileName}
+              fileName={file?.name}
             />
           )}
           {inferenceResult && (
